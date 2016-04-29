@@ -8,39 +8,50 @@ NFIRS is a database of fires in the United States released annually by [...].
 * Matthew Carrol
 * David Riordan
 
-# The Work
-## Log so far
-### 4/29/2016
-Downloaded zips of the data from Rahul's dropbox into this folder (these files are not part of the git repository, but will be made available on Internet Archive as we recieved them).
+# Getting Started
+This is by no means comprehensive, but should sorta get you set up to somewhere.
 
-Trying to do all the analysis work within a Jupyter iPython notebook and within Docker. So... that might be a mistake. But lets try it.
+## Docker-land
+You're very, very brave. Seriously, you don't have to do this. Consider taking the [Path Of the Normcore](#normcore) below.
 
-`docker run -d -p 8888:8888 jupyter/datascience-notebook start-notebook.sh --NotebookApp.base_url=.`
+1. [Install Docker Engine](https://docs.docker.com/engine/installation/)
+2. Build the local ipython/docker image
+`docker build .` That should give you a LOOOOOONG name for the image (which only exists inside your computer)
+3. Start running the image `docker run -d -p 8888:8888 -v $(pwd):/home/jovyan/work [THE-FIRST-4-CHARACTERS-OF-THAT-ABOVE-IMAGE] start-notebook.sh` This should have a gibberish, but at least human-readable name. You can [Access The Running Server Here](http://127.0.0.1:8888)
+4. Rename the (now running) image something memorable `docker rename [JIBBERISH-ENGLISH] turkeyfires`
+5. When you want to stop this image `docker stop turkeyfires`
+6. When you want to resume it later `docker start turkeyfires`
 
-Lots of data archaeology still to be done
+When running, you can [Access the running server here](http://127.0.0.1:8888)
 
-Command didn't work. Looks like it's mounting the baseurl within the docker image still, and not to the filesystem.
+This should give you read/write access to this folder from within the Jupyter Notebook.
 
-Mount Docker Jupyter/Datascience Notebook for THIS FOLDER/PROJECT
-`docker run -d -p 8888:8888 -v $(pwd):/home/jovyan/work jupyter/datascience-notebook start-notebook.sh`
+To add a new dependency, add it to the Dockerfile.
 
-The Windows `exe`'s are a lie. It's self-extracting ZIP files, which [Unix Zip should have no problem opening](http://superuser.com/a/737244/588732). 
 
-The files are all dbf. Need a python DBF reader to see if they've all got fairly normalized metadata already.
+## Normcore
 
-I appear to have cracked enough of Docker to work with it. Still feels less portable than VirtualENV but whatever, we'll roll with it.
+This assumes a fairly high level of installer competency with Python.
 
-Built custom Dockerfile, using the jupyter/scipy-notebook as base and then just running `pip install` for libraries (conda is being a pain). NOTE: needed to add to the .dockerignore all the actual files so it wouldn't need to stream all the data into the environment when building.
+Python-ness:
+- Assumes python 3.5
+- Please use virtualenv
+- `pip install requirements.txt`
+- `ipython notebook`
 
-Installed simpledbf, which appears to be reading things fine. Importantly, may make sense to move this all to CSV's + SQLite. A script to do that should be created.
+When running, you can [Access the running server here](http://127.0.0.1:8888)
+
+(this method of documentation has been untested)
+
+### updates:
+This assumes all dependencies are frozen with `pip freeze > requirements.txt`. If something's missing, hopefully the code will sufficiently yell at you when you try and run it. Then yell at me here to fix it.
 
 # TODO
 ## Data Gardening
-- [ ] Get data out of the exe files 
+- [ ] Get data out of the exe files
 - [ ] And into CSVs
 - [ ] Normalize data across years
 - [ ] Publish original format data to internet archive (with metadata)
 - [ ] Publish CSV format data to internet archive (with metadata)
 - [ ] Publish normalized CSVs of data to Internet Archive (with Metadata)
 - [ ] Publish scripts to do data transforms from Internet Archive copies into useful formats
-
