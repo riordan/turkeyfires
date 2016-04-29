@@ -3,9 +3,10 @@
 NFIRS is a database of fires in the United States released annually by [...].
 
 # Collaborators
+* Rahul Bhargava
+* Matt Carroll
+* Queenie Ho
 * J. Nathan Mattias
-* Rahul Bot
-* Matthew Carrol
 * David Riordan
 
 # Getting Started
