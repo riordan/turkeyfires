@@ -19,6 +19,12 @@ Trying to do all the analysis work within a Jupyter iPython notebook and within 
 
 Lots of data archaeology still to be done
 
+Command didn't work. Looks like it's mounting the baseurl within the docker image still, and not to the filesystem.
+
+Mount Docker Jupyter/Datascience Notebook for THIS FOLDER/PROJECT
+`docker run -d -p 8888:8888 -v $(pwd):/home/jovyan/work jupyter/datascience-notebook start-notebook.sh`
+
+
 # TODO
 ## Data Gardening
 - [ ] Get data out of the exe files 
